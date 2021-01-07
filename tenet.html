@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>TENET Form</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+</head>
+<body>
+    <div style="text-align:center;">
+        <h2>Name</h2>
+        <input class="name" value="" oninput="handleName(this.value)" />
+        <br />
+        <h2>Address</h2>
+        <input class="address" oninput="handleAddress(this.value)" />
+        <br /><br/>
+        <button onclick="reverseEntropy()">Reverse Entropy of this tab</button>
+    </div>
+    <script type="text/javascript">
+    let name, address
+    name = document.getElementsByClassName('name')[0].value 
+    address = document.getElementsByClassName('address')[0].value
+    const events = []
+    const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
+    function handleName(value) {
+        console.log('same ',)
+        console.log('same ',value)
+        events.push({
+            'type': 'name',
+            'old': name,
+            'new': value
+        })
+        name = value
+
+        console.log(events)
+     }
+
+    function handleAddress(value) {
+        events.push({
+            'type': 'address',
+            'old': address,
+            'new': value
+        })
+        
+        address = value
+        console.log(events)
+    }
+
+    function return_diff_arr(old_str, new_str) {
+        // old is bigger than the new_str
+        return old_str.split('').slice(new_str.length)
+    }
+
+    async function reverseEntropy() {
+        console.log("lol")
+        while(events.length != 0) {
+            const current_event_to_reverse = events.pop()
+            const field_type = current_event_to_reverse['type']
+            if(current_event_to_reverse['old'].length < current_event_to_reverse['new'].length) {
+                while(document.getElementsByClassName(field_type)[0].value != current_event_to_reverse['old']) {
+                    await sleep(300)
+                    document.getElementsByClassName(field_type)[0].value  = document.getElementsByClassName(field_type)[0].value.slice(0,-1)
+                }
+            } else {
+                const the_difference = return_diff_arr(current_event_to_reverse['old'], current_event_to_reverse['new'])
+                console.log('the_difference ', the_difference)
+                while(document.getElementsByClassName(field_type)[0].value != current_event_to_reverse['old']) {
+                    await sleep(300)
+                    const char_added = the_difference.shift()
+                    console.log('char_added ', char_added)
+                    document.getElementsByClassName(field_type)[0].value = document.getElementsByClassName(field_type)[0].value + char_added
+                }
+            }
+        
+        }
+        
+        window.close();
+    }
+    
+    </script>
+</body>
+</html>
