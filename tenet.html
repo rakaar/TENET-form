@@ -73,35 +73,16 @@
         console.log(events)
     }
 
-    function return_diff_arr(old_str, new_str) {
-        // old is bigger than the new_str
-        return old_str.split('').slice(new_str.length)
-    }
-
     async function reverseEntropy() {
         document.getElementById('btn').style.background = "blue"
         console.log("lol")
         while(events.length != 0) {
             const current_event_to_reverse = events.pop()
             const field_type = current_event_to_reverse['type']
-            if(current_event_to_reverse['old'].length < current_event_to_reverse['new'].length) {
-                while(document.getElementsByClassName(field_type)[0].value != current_event_to_reverse['old']) {
-                    await sleep(300)
-                    document.getElementsByClassName(field_type)[0].value  = document.getElementsByClassName(field_type)[0].value.slice(0,-1)
-                }
-            } else {
-                const the_difference = return_diff_arr(current_event_to_reverse['old'], current_event_to_reverse['new'])
-                console.log('the_difference ', the_difference)
-                while(document.getElementsByClassName(field_type)[0].value != current_event_to_reverse['old']) {
-                    await sleep(300)
-                    const char_added = the_difference.shift()
-                    console.log('char_added ', char_added)
-                    document.getElementsByClassName(field_type)[0].value = document.getElementsByClassName(field_type)[0].value + char_added
-                }
-            }
-        
+            document.getElementsByClassName(field_type)[0].value = current_event_to_reverse['old']
+            await sleep(300)
+
         }
-        
         document.getElementById('btn').style.background = "#B80F0A"
         await sleep(200)
         window.close();
