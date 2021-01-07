@@ -6,6 +6,27 @@
     <title>TENET Form</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     
+
+<style>
+    input {
+        border-radius: 25px;
+    }
+    input:focus {
+        outline: none;
+    }
+
+    button {
+        border-radius: 25px;
+        background-color: #B80F0A;
+        color: white;
+        padding: 15px 25px;
+        outline: none;
+    }
+
+    button:focus {
+        outline: none;
+    }
+</style>
 </head>
 <body>
     <div style="text-align:center;">
@@ -15,7 +36,7 @@
         <h2>Address</h2>
         <input class="address" oninput="handleAddress(this.value)" />
         <br /><br/>
-        <button onclick="reverseEntropy()">Reverse Entropy of this tab</button>
+        <button onclick="reverseEntropy()" id="btn">Reverse Entropy of this tab</button>
     </div>
     <script type="text/javascript">
     let name, address
@@ -56,6 +77,7 @@
     }
 
     async function reverseEntropy() {
+        document.getElementById('btn').style.background = "blue"
         console.log("lol")
         while(events.length != 0) {
             const current_event_to_reverse = events.pop()
@@ -78,6 +100,7 @@
         
         }
         
+        document.getElementById('btn').style.background = "#B80F0A"
         window.close();
     }
     
